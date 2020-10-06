@@ -1,9 +1,18 @@
 package edu.tpo.l1;
 
+import edu.tpo.l1.p2.HashTable;
 import edu.tpo.l1.p3.*;
 
 public class Main {
+
     public static void main(String[] args) {
+    }
+
+    private static void startPartTwo() {
+        
+    }
+
+    private static void startPartThree() {
         Person.BodyPart arthurJaw = new Person.BodyPart("челюсть");
 
         Person arthur = new PersonBuilder()
@@ -47,4 +56,6 @@ public class Main {
 
         arthurJaw.changeState(State.DROOPED);
     }
+
+
 }

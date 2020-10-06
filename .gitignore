@@ -1,2 +1,8 @@
 # Project exclude paths
 /target/
+*.iml
+/gradle/
+/.idea/
+
+!build.gradle
+!settings.gradle
