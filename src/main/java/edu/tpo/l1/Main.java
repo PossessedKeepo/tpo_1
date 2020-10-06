@@ -9,7 +9,7 @@ public class Main {
     }
 
     private static void startPartTwo() {
-        
+
     }
 
     private static void startPartThree() {
