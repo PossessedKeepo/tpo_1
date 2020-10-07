@@ -1,13 +1,5 @@
 public class arcsin {
     static final double eps = 1e-6;
-    public static void main(String[] args) {
-        System.out.println(Math.asin(0.5));
-        System.out.println(arcsin(0.5));
-        double functionArgument = 0.9;
-        int precision = 4;
-        System.out.println((double) Math.round(arcsin.arcsin(functionArgument) * Math.pow(10, precision)) / (Math.pow(10, precision)));
-        System.out.println((double) Math.round(Math.asin(functionArgument) * Math.pow(10, precision)) / (Math.pow(10, precision)));
-    }
     public static double arcsin(double x) {
         double result = 0, prevSum = 1;
         for(int n = 0; Math.abs(result - prevSum) > eps; n++) {

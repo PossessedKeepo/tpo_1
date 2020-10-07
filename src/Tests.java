@@ -1,5 +1,6 @@
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
@@ -9,27 +10,37 @@ import java.util.Collection;
 
 
 @RunWith(Parameterized.class)
-public class Positive {
+public class Tests {
     private double functionArgument;
 
-    public Positive(double functionArgument, int precision) {
+    public Tests(double functionArgument) {
         this.functionArgument = functionArgument;
     }
 
-    @Parameterized.Parameters(name="x = {0}; precision = {1}")
+    @Parameterized.Parameters(name="x = {0}")
     public static Collection parameters() {
         return Arrays.asList(new Object[][] {
-                { 0.5, 4 },
-                { 0.9, 4 }
+                //граничные значения
+                {1.0},
+                {0.8},
+                {0.52},
+                {0},
+                {-0.8},
+                {-0.52},
+                {-1.0},
+
+                //значения больше 1 или меньше -1
+                {2.0},
+                {-5.0},
+                {7.77},
+                {-8.88}
+
 
         });
     }
+
     @Test
     public void test_arcsin_equals_MathArcsin() {
-        /*Assert.assertEquals(
-                (double) Math.round(arcsin.arcsin(functionArgument) * Math.pow(10, precision)) / (Math.pow(10, precision)),
-                (double) Math.round(Math.asin(functionArgument) * Math.pow(10, precision)) / (Math.pow(10, precision))
-        );*/
         Assert.assertEquals(
                 arcsin.arcsin(functionArgument),
                 Math.asin(functionArgument),
