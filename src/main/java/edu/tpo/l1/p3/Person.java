@@ -9,18 +9,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter @Setter @NoArgsConstructor
-public class Person implements Witnessable {
+public class Person implements Witnessable, Loggable {
+
+    private StringBuilder logger = new StringBuilder();
 
     private String name = "";
 
     private List<DetailedState> states = new ArrayList<>();
     private List<BodyPart> bodyPartList = new ArrayList<>();
 
+    @Override
+    public String getLog() {
+        return logger.toString().trim();
+    }
+
     @Getter @Setter @NoArgsConstructor @AllArgsConstructor
-    public static class BodyPart {
+    public static class BodyPart implements Loggable {
         private BodyPart parent = null;
         private String name = "";
         private DetailedState state = new DetailedState();
+
+        private StringBuilder logger = new StringBuilder();
 
         public BodyPart(String name) {
             this.name = name;
@@ -34,7 +43,7 @@ public class Person implements Witnessable {
         public void changeState(DetailedState state) {
             this.state = state;
 
-            System.out.println(this);
+            logger.append(this);
         }
 
         public void changeState(State state) {
@@ -43,34 +52,40 @@ public class Person implements Witnessable {
 
         @Override
         public String toString() {
-            return name + " " + state + (parent != null ? " на " + parent : "");
+            StringBuilder output = new StringBuilder();
+
+            output.append(name);
+
+            if (state != null) {
+                output.append(" ").append(state);
+            }
+
+            if (parent != null) {
+                output.append(" на ").append(parent);
+            } else {
+                output.append("\n");
+            }
+
+            return output.toString();
         }
 
         public void setState(DetailedState detailedState) {
         }
-    }
 
-    private void setBodyPartList(List<BodyPart> bodyPartList) {}
-    private void setStates(List<DetailedState> stateList) {}
+        @Override
+        public String getLog() {
+            return logger.toString().trim();
+        }
+    }
 
     public void enter(Direction direction) {
         if (direction == null) throw new NullPointerException("Direction can not be null");
 
-        System.out.print(this + " ");
+        logger.append(this).append(" ");
         for (DetailedState state : states) {
-            System.out.print(state + " ");
+            logger.append(state).append(" ");
         };
-        System.out.println( "вошел " + direction);
-    }
-
-    public String getStatesPresentation() {
-        StringBuilder res = new StringBuilder();
-        states.forEach(s -> {
-            res.append(", ");
-            res.append(s);
-        });
-
-        return res.toString();
+        logger.append("вошел ").append(direction).append("\n");
     }
 
     public void addState(State state, Action action, Object object) {
@@ -78,7 +93,7 @@ public class Person implements Witnessable {
         if (action == null) throw new NullPointerException("Action can not be null");
 
         DetailedState detailedState = new DetailedState(state, action, object);
-        System.out.println(name + " " + detailedState);
+        logger.append(name).append(" ").append(detailedState).append("\n");
 
         this.states.add(detailedState);
     }
@@ -101,5 +116,15 @@ public class Person implements Witnessable {
     @Override
     public String toString() {
         return name;
+    }
+
+    protected String getStatesPresentation() {
+        StringBuilder res = new StringBuilder();
+        states.forEach(s -> {
+            res.append(", ");
+            res.append(s);
+        });
+
+        return res.toString();
     }
 }
